@@ -1,0 +1,93 @@
+/* MyUsagi — desktop pet styling.
+   The window is transparent; only the pet is painted. Whole-body motion is
+   driven from renderer.js as one composed transform on #layer-move. */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%; height: 100%;
+  background: transparent;
+  background-color: rgba(0, 0, 0, 0);
+  cursor: default;
+  -webkit-user-select: none; user-select: none;
+}
+
+#stage { position: fixed; inset: 0; background: transparent; }
+
+/* nothing grabs the OS cursor by default — the renderer toggles capture based
+   on whether the cursor is actually over the pet's pixels (alpha hit-test). */
+html, body, #stage, #layer-move, #layer-tilt, #layer-breathe, #pet-content { pointer-events: none; }
+
+#layer-move { position: absolute; transform-origin: 50% 100%; will-change: transform; }
+#layer-tilt, #layer-breathe, #pet-content { width: 100%; height: 100%; }
+/* head nod (face click): squashes from the feet so the head dips, feet stay put */
+#layer-tilt { transform-origin: 50% 100%; will-change: transform; }
+
+#pet-content img {
+  width: 100%; height: 100%; display: block;
+  -webkit-user-drag: none; user-select: none;
+}
+
+/* ---------- frame-sequence action overlay (e.g. roll hands) ---------- */
+#pet-content img.action-img {
+  position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+  height: 100%; width: auto; display: none; -webkit-user-drag: none;
+  overflow: visible !important;
+}
+#pet-content.acting > img.action-img { display: block; }
+#pet-content.acting > .layered,
+#pet-content.acting > img.pet-main { visibility: hidden; }
+/* Dance/roll overlays may extend past the idle silhouette — keep limbs visible. */
+#layer-move, #layer-tilt, #layer-breathe, #pet-content.acting { overflow: visible; }
+
+/* ---------- run-cycle overlay (looping frames while walking) ---------- */
+#pet-content img.run-img {
+  position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+  height: 100%; width: auto; display: none; -webkit-user-drag: none;
+}
+#pet-content.running > img.run-img { display: block; }
+#pet-content.running > .layered,
+#pet-content.running > img.pet-main { visibility: hidden; }
+
+/* ---------- layered image pet (body + ear layers + eyelids) ---------- */
+.layered { position: absolute; inset: 0; }
+.layered .part { position: absolute; }
+.layered .ear { will-change: transform; }          /* rotated per-frame by JS (no CSS transition) */
+
+.lid {
+  position: absolute;
+  transform-origin: 50% 0%;                          /* close downward from the top */
+  transform: scaleY(0);                              /* open (hidden) at rest */
+  transition: transform .09s ease;
+  border-radius: 45% 45% 50% 50%;
+  overflow: hidden;
+  pointer-events: none;
+}
+.lid .lash {
+  position: absolute; left: 12%; right: 12%; bottom: 20%; height: 34%;
+  border-bottom: 5px solid #46403a;                  /* the closed-eye line */
+  border-radius: 0 0 60% 60%;
+}
+body.is-blink .lid { transform: scaleY(1); }         /* blink: lids cover the eyes */
+
+/* ---------- speech bubble (random chatter + click) ---------- */
+#speech.speech {
+  position: absolute; left: 50%; top: 3px;
+  transform: translate(-50%, 5px) scale(.82);
+  max-width: 96%; padding: 4px 11px 5px;
+  background: #fff; color: #5b5149;
+  border: 2px solid #46403a; border-radius: 14px;
+  font: 700 13px/1.3 -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+  white-space: nowrap; text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .12);
+  opacity: 0; pointer-events: none; z-index: 6;
+  transition: opacity .14s ease, transform .18s cubic-bezier(.2, 1.5, .45, 1);
+}
+#speech.speech.show { opacity: 1; transform: translate(-50%, 0) scale(1); }
+/* downward tail anchored at the bubble's bottom edge (top:100%) so it sits fully
+   BELOW the text — never overlapping it. Black outline triangle + white fill. */
+#speech.speech::before, #speech.speech::after {
+  content: ""; position: absolute; left: 50%; top: 100%; width: 0; height: 0; transform: translateX(-50%);
+}
+#speech.speech::before { margin-top: -1px; border: 7px solid transparent; border-top-color: #46403a; }
+#speech.speech::after  { margin-top: -4px; border: 6px solid transparent; border-top-color: #fff; }

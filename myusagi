@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+# Wrapper — delegates to the Tauri binary built as `myusagi`.
+ROOT="$(cd "$(dirname "$0")" && pwd)"
+BIN="$ROOT/target/release/myusagi"
+if [ ! -x "$BIN" ]; then
+  BIN="$ROOT/target/debug/myusagi"
+fi
+if [ ! -x "$BIN" ]; then
+  echo "myusagi binary not found. Run: cargo build --release" >&2
+  exit 1
+fi
+exec "$BIN" "$@"

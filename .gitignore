@@ -1,0 +1,11 @@
+target/
+native/target/
+native/gen/
+dist/
+*.rs.bk
+.DS_Store
+Thumbs.db
+webview/images/
+webview/audio/
+webview/_extracted/
+node_modules/

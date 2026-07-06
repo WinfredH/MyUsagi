@@ -1,0 +1,4 @@
+[[permission]]
+identifier = "allow-fit-window"
+description = "Allows resizing the pet window"
+commands.allow = ["fit_window"]

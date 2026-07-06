@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schema.tauri.app/config/2/capability",
+  "identifier": "default",
+  "description": "Default capability for MyUsagi pet window",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "core:event:default",
+    "core:window:default",
+    "core:menu:default",
+    "core:webview:default",
+    "core:app:default",
+    "core:path:default",
+    "core:resources:default",
+    "dialog:default",
+    "allow-get-asset-bundle",
+    "allow-fit-window",
+    "allow-drag-start",
+    "allow-drag-move",
+    "allow-drag-end",
+    "allow-set-ignore-cursor",
+    "allow-open-menu",
+    "allow-quit-app"
+  ]
+}

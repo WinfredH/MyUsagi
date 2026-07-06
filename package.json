@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "type": "module",
+  "packageManager": "bun@1.3.14",
+  "scripts": {
+    "test": "vitest run",
+    "test:engine": "vitest run webview/tests/engine",
+    "bake:dance": "bun scripts/bake-usagi-dance.mjs",
+    "unpack:pak": "bun scripts/unpack-pak.mjs",
+    "build:webview": "bun run scripts/build-webview.ts",
+    "dev:webview": "bun run scripts/build-webview.ts --watch",
+    "build:bundle:only": "bun build webview/src/renderer.ts --target=browser --outfile=webview/dist/bundle.js --minify",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "happy-dom": "^20.0.0",
+    "sharp": "^0.33.5",
+    "typescript": "^6.0.3",
+    "vitest": "^3.2.4"
+  }
+}

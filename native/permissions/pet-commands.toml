@@ -1,0 +1,14 @@
+[[permission]]
+identifier = "allow-set-ignore-cursor"
+description = "Allows toggling mouse pass-through"
+commands.allow = ["set_ignore_cursor"]
+
+[[permission]]
+identifier = "allow-open-menu"
+description = "Allows opening the context menu"
+commands.allow = ["open_menu"]
+
+[[permission]]
+identifier = "allow-quit-app"
+description = "Allows quitting the application"
+commands.allow = ["quit_app"]

@@ -1,0 +1,4 @@
+[[permission]]
+identifier = "allow-get-asset-bundle"
+description = "Allows decrypting and returning the asset bundle"
+commands.allow = ["get_asset_bundle"]

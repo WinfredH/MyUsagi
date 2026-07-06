@@ -1,0 +1,4 @@
+# Tauri CLI path hints (non-default layout: native + webview).
+[env]
+TAURI_APP_PATH = { value = "native", relative = true }
+TAURI_FRONTEND_PATH = { value = "webview", relative = true }

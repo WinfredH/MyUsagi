@@ -1,0 +1,14 @@
+[[permission]]
+identifier = "allow-drag-start"
+description = "Allows starting window drag"
+commands.allow = ["drag_start"]
+
+[[permission]]
+identifier = "allow-drag-move"
+description = "Allows moving window during drag"
+commands.allow = ["drag_move"]
+
+[[permission]]
+identifier = "allow-drag-end"
+description = "Allows ending window drag"
+commands.allow = ["drag_end"]
